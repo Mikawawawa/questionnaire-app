@@ -1,3 +1,4 @@
+const path = require('path')
 const config = {
   projectName: 'questionnaire-app',
   date: '2022-10-3',
@@ -14,8 +15,11 @@ const config = {
       '@dcasia/mini-program-tailwind-webpack-plugin/dist/taro',
       {
         // ...options
+        enableRpx: true,
+        designWidth: 375
       },
-    ]
+    ],
+    '@tarojs/plugin-html'
   ],
   defineConstants: {},
   copy: {
@@ -32,6 +36,11 @@ const config = {
   },
   cache: {
     enable: false, // Webpack 持久化缓存配置，建议开启。默认配置请参考：https://docs.taro.zone/docs/config-detail#cache
+  },
+  alias: {
+    '@/components': path.resolve(__dirname, '..', 'src/components'),
+    '@/utils': path.resolve(__dirname, '..', 'src/utils'),
+    '@/reducer': path.resolve(__dirname, '..', 'src/reducer')
   },
   mini: {
     postcss: {

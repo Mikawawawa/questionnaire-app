@@ -1,0 +1,6 @@
+.page {
+  padding-bottom: calc(constant(safe-area-inset-bottom) + 24px) ;
+  padding-bottom: calc(env(safe-area-inset-bottom) + 24px);
+
+  box-sizing: border-box;
+}

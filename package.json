@@ -37,9 +37,11 @@
   "author": "",
   "dependencies": {
     "@babel/runtime": "^7.7.7",
+    "@chunpu/http": "^3.0.0",
     "@tarojs/components": "3.5.6",
     "@tarojs/helper": "3.5.6",
     "@tarojs/plugin-framework-react": "3.5.6",
+    "@tarojs/plugin-html": "^3.5.6",
     "@tarojs/plugin-platform-alipay": "3.5.6",
     "@tarojs/plugin-platform-jd": "3.5.6",
     "@tarojs/plugin-platform-qq": "3.5.6",
@@ -54,7 +56,13 @@
     "@tarojs/taro-h5": "3.5.6",
     "react": "^18.0.0",
     "react-dom": "^18.0.0",
-    "taro-hooks": "^1.5.9"
+    "react-redux": "^8.0.4",
+    "redux": "^4.2.0",
+    "redux-logger": "^3.0.6",
+    "redux-thunk": "^2.4.1",
+    "tailwind": "^4.0.0",
+    "taro-hooks": "^1.5.9",
+    "taro-lazy-swiper": "^0.0.10"
   },
   "devDependencies": {
     "@babel/core": "^7.8.0",
