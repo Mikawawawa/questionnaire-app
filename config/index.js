@@ -16,10 +16,10 @@ const config = {
       {
         // ...options
         enableRpx: true,
-        designWidth: 375
+        designWidth: 375,
       },
     ],
-    '@tarojs/plugin-html'
+    '@tarojs/plugin-html',
   ],
   defineConstants: {},
   copy: {
@@ -40,7 +40,7 @@ const config = {
   alias: {
     '@/components': path.resolve(__dirname, '..', 'src/components'),
     '@/utils': path.resolve(__dirname, '..', 'src/utils'),
-    '@/reducer': path.resolve(__dirname, '..', 'src/reducer')
+    '@/reducer': path.resolve(__dirname, '..', 'src/reducer'),
   },
   mini: {
     postcss: {
@@ -64,6 +64,7 @@ const config = {
     },
   },
   h5: {
+    esnextModules: ['taro-ui'],
     publicPath: '/',
     staticDirectory: 'static',
     postcss: {

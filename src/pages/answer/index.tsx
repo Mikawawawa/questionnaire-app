@@ -3,6 +3,7 @@ import { View } from '@tarojs/components'
 import { ActionButton } from '@/components/Questionnaire/actions'
 import { HistoryCard } from '@/components/Flow/HistoryCard'
 import './index.css'
+import AnswerForm from '@/components/answerForm'
 
 const dataSource = Array(10)
   .fill(0)
@@ -15,34 +16,27 @@ export default () => {
 
   return (
     <View className="page">
-      <LazySwiper
-        lazySwiper={lazySwiper}
-        dataSource={dataSource}
+      <div
         style={{
-          height: '100%'
+          flex: 1,
         }}
-        keyExtractor={(data) => data.toString()}
-        renderContent={(data, { isActive }) => {
-          return (
-            <div
-              className='item'
-            >
-              {JSON.stringify(data)}
-              <HistoryCard></HistoryCard>
-              <HistoryCard></HistoryCard>
-              <HistoryCard></HistoryCard>
-              <HistoryCard></HistoryCard>
-              <HistoryCard></HistoryCard>
-              <HistoryCard></HistoryCard>
-              <HistoryCard></HistoryCard>
-              <HistoryCard></HistoryCard>
-              <HistoryCard></HistoryCard>
-              <HistoryCard></HistoryCard>
-              <HistoryCard></HistoryCard>
-            </div>
-          )
-        }}
-      />
+      >
+        <LazySwiper
+          lazySwiper={lazySwiper}
+          dataSource={dataSource}
+          style={{
+            height: '100%',
+          }}
+          keyExtractor={(data) => data.toString()}
+          renderContent={(data, { isActive }) => {
+            return (
+              <div className="item m-4">
+                <AnswerForm />
+              </div>
+            )
+          }}
+        />
+      </div>
       <div className="fixed-bar">
         <ActionButton onClick={() => lazySwiper.prevSection()}>
           上一个
