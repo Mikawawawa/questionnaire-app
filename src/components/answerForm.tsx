@@ -1,4 +1,4 @@
-import Taro from '@tarojs/taro'
+import Taro from "@tarojs/taro";
 import {
   AtForm,
   AtInput,
@@ -6,17 +6,18 @@ import {
   AtCheckbox,
   AtIcon,
   AtBadge,
-  AtRate,
-} from 'taro-ui'
-import { EnhancedForm } from './Form'
+  AtRate
+} from "taro-ui";
+import { EnhancedForm } from "./Form";
 import {
   EnhancedMultipleSelector,
-  EnhancedSingleSelector,
-} from './Form/controls/EnhancedSelector'
-import { EnhancedRadio } from './Form/controls/EnhancedSingle'
-import { FormItemEnhanced } from './Form/formItem'
+  EnhancedSingleSelector
+} from "./Form/controls/EnhancedSelector";
+import { EnhancedRadio } from "./Form/controls/EnhancedSingle";
+import { FormItemEnhanced } from "./Form/formItem";
 
-import { rulePhone } from './Form/rules'
+import { rulePhone } from "./Form/rules";
+import { ActionButton } from "./Questionnaire/actions";
 // export default function AnswerForm() {
 //   return (
 //     <AtForm
@@ -81,70 +82,110 @@ import { rulePhone } from './Form/rules'
 //   )
 // }
 
-export default function AnswerForm() {
+export default function AnswerForm({ question, children, onChange, data }) {
   return (
-    <EnhancedForm onChange={value => {
-      console.log(value)
-    }}>
-      <div className="at-article__h3">请从下列选项中，选出一个最符合你的</div>
-      <FormItemEnhanced
-        name="add"
-        label="手机号码"
-        prefix={<AtIcon size={10} value="add" />}
-        // suffix={<AtIcon size={20} value="chevron-right" />}
-        enter
-        rules={[
-          { required: true, message: '请输入手机号' },
-          {
-            validator: (rule, value) => rulePhone(rule, value),
-            message: '请输入正确的手机号',
-          },
-        ]}
-      >
-        <AtInput placeholder="我是默认提示" />
-      </FormItemEnhanced>
+    <EnhancedForm
+      defaultValue={{ data }}
+      onChange={value => {
+        onChange(value.data);
+      }}
+    >
+      {question.type === "multi" && (
+        <>
+          <FormItemEnhanced
+            name="data"
+            label={question.title}
+            description={question.description}
+            rules={[{ required: true, message: "不要忘记填写这一项哦" }]}
+          >
+            <EnhancedMultipleSelector
+              options={question.options.map(option => ({
+                label: option.title,
+                value: option.code
+              }))}
+            />
+          </FormItemEnhanced>
+        </>
+      )}
 
-      <FormItemEnhanced name="single">
+      {question.type === "rating" && (
+        <>
+          <FormItemEnhanced
+            name="data"
+            label={question.title}
+            description={question.description}
+            prefix={<AtIcon size={10} value="add" />}
+            // suffix={<AtIcon size={20} value="chevron-right" />}
+            enter
+            rules={[
+              { required: true, message: "不要忘记填写这一项哦" }
+              // { required: true, message: "请输入手机号" },
+              // {
+              //   validator: (rule, value) => rulePhone(rule, value),
+              //   message: "请输入正确的手机号"
+              // }
+            ]}
+          >
+            <AtRate
+              style={{
+                padding: "30rpx"
+              }}
+              max={+(question.max || 5)}
+              size={20}
+              onChange={val => {
+                console.log("onChange", val);
+              }}
+            ></AtRate>
+          </FormItemEnhanced>
+        </>
+      )}
+
+      {question.type === "complete" && (
+        <>
+          <FormItemEnhanced
+            name="data"
+            label={question.title}
+            description={question.description}
+            prefix={<AtIcon size={10} value="add" />}
+            // suffix={<AtIcon size={20} value="chevron-right" />}
+            enter
+            rules={[
+              { required: true, message: "不要忘记填写这一项哦" }
+              // {
+              //   validator: (rule, value) => rulePhone(rule, value),
+              //   message: "请输入正确的手机号"
+              // }
+            ]}
+          >
+            <AtInput placeholder="请在此填写" />
+          </FormItemEnhanced>
+        </>
+      )}
+      {/*
+
+      <FormItemEnhanced name="data">
         <EnhancedSingleSelector
           options={[
-            { label: '单选项一', value: 'option1', desc: '单选项描述' },
-            { label: '单选项二', value: 'option2' },
+            { label: "单选项一", value: "option1", desc: "单选项描述" },
+            { label: "单选项二", value: "option2" },
             {
-              label: '单选项三禁用',
-              value: 'option3',
+              label: "单选项三禁用",
+              value: "option3",
               desc: (
                 <AtBadge value={10} maxValue={99}>
                   <AtButton size="small">按钮</AtButton>
                 </AtBadge>
               ),
-              disabled: true,
-            },
+              disabled: true
+            }
           ]}
         />
       </FormItemEnhanced>
 
-      <FormItemEnhanced name="multiple">
-        <EnhancedMultipleSelector
-          options={[
-            { label: '单选项一', value: 'option1', desc: '单选项描述' },
-            { label: '单选项二', value: 'option2' },
-            {
-              label: '单选项三禁用',
-              value: 'option3',
-              desc: (
-                <AtBadge value={10} maxValue={99}>
-                  <AtButton size="small">按钮</AtButton>
-                </AtBadge>
-              ),
-              disabled: true,
-            },
-          ]}
-        />
-      </FormItemEnhanced>
-
-      <FormItemEnhanced name="rate">
+      <FormItemEnhanced name="data">
         <AtRate size={40} />
-      </FormItemEnhanced>
+      </FormItemEnhanced> */}
+      {children}
     </EnhancedForm>
-  )
+  );
 }

@@ -45,7 +45,7 @@ const Index = () => {
           let token = Taro.getStorageSync('token')
           if (token) {
             const res = await Taro.request({
-              url: `http://localhost:3000/api/wechat/auth`,
+              url: `http://192.168.2.228:3000/api/wechat/auth`,
             })
             console.log(res)
             if (res.statusCode !== 200) {
@@ -64,7 +64,7 @@ const Index = () => {
                 //发起网络请求
                 console.log(res.code)
                 const loginResult = await Taro.request({
-                  url: 'http://localhost:3000/api/wechat/login',
+                  url: 'http://192.168.2.228:3000/api/wechat/login',
                   data: {
                     code: res.code,
                     encryptedData: data.encryptedData,

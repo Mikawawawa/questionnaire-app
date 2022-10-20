@@ -1,17 +1,16 @@
 /* eslint-disable no-undef */
-import { Component, createRef, FC, useEffect, useState } from 'react'
-import { View, Text, Switch, Form, Button } from '@tarojs/components'
-import { FormContext } from './context'
-import { AtButton, AtForm } from 'taro-ui'
+import { Component, createRef, FC, useEffect, useState } from "react";
+import { View, Text, Switch, Form, Button } from "@tarojs/components";
+import { FormContext } from "./context";
+import { AtButton, AtForm } from "taro-ui";
 
-export const EnhancedForm: FC<any> = (props) => {
-  const [form, updateForm] = useState({})
-  
+export const EnhancedForm: FC<any> = props => {
+  const [form, updateForm] = useState(props.defaultValue || {});
+
   useEffect(() => {
-    console.log(form)
-    props.onChange?.(form)
-  }, [form])
-  
+    props.onChange?.(form);
+  }, [form]);
+
   return (
     <FormContext.Provider
       value={{
@@ -19,25 +18,25 @@ export const EnhancedForm: FC<any> = (props) => {
         handleChange: (name, value) => {
           updateForm({
             ...form,
-            [name]: value,
-          })
-        },
+            [name]: value
+          });
+        }
       }}
     >
       <div
         style={{
-          flexShrink: 0,
+          flexShrink: 0
         }}
       >
         <AtForm
           className="space-y-4"
           onSubmit={() => {
-            console.log('form onSubmit', form)
+            console.log("form onSubmit", form);
           }}
         >
           {props.children}
         </AtForm>
       </div>
     </FormContext.Provider>
-  )
-}
+  );
+};

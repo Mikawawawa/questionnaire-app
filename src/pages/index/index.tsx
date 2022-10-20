@@ -1,35 +1,41 @@
-import { Component, useEffect } from 'react'
-import { View, Image } from '@tarojs/components'
-import './index.css'
-import Logo from '../../img/logo.svg'
+/* eslint-disable import/first */
+import React, { Component, useEffect, useState } from "react";
+
 import {
   QuestionnaireSubtitle,
-  QuestionnaireTitle,
-} from '@/components/Questionnaire/title'
-import { ActionButton, PrimaryButton } from '@/components/Questionnaire/actions'
-import Taro from '@tarojs/taro'
-import { EnhancedInputField } from '@/components/Questionnaire/controls'
-import { CodeInput } from '@/components/Flow/CodeInputer'
-import { EnhancedLink } from '@/components/Link'
-import { HistoryCard } from '@/components/Flow/HistoryCard'
-import { mockData, ResultItem } from '@/components/Questionnaire/resultItem'
-import { AuthButton } from '@/components/withAuth'
-import { useQueryUser } from '@/utils/hooks/useQueryUser'
+  QuestionnaireTitle
+} from "@/components/Questionnaire/title";
+import {
+  ActionButton,
+  PrimaryButton
+} from "@/components/Questionnaire/actions";
+import Taro from "@tarojs/taro";
+
+import { CodeInput } from "@/components/Flow/CodeInputer";
+import { EnhancedLink } from "@/components/Link";
+
+import { AuthButton } from "@/components/withAuth";
+import { useQueryUser } from "@/utils/hooks/useQueryUser";
+
+import "./index.css";
+import { useSelector } from "react-redux";
 
 const Index = () => {
-  useQueryUser()
+  useQueryUser();
+  const user = useSelector(state => state.user);
+  const [passcode, setPasscode] = useState<any>();
 
   return (
     <div
       className='page'
       style={{
-        display: 'flex',
-        flexDirection: 'column',
-        justifyContent: 'center',
-        alignItems: 'flex-start',
+        display: "flex",
+        flexDirection: "column",
+        justifyContent: "center",
+        alignItems: "flex-start",
 
-        height: '100vh',
-        overflow: 'hidden',
+        height: "100vh",
+        overflow: "hidden"
       }}
     >
       <QuestionnaireTitle>霍兰德兴趣测评</QuestionnaireTitle>
@@ -38,17 +44,17 @@ const Index = () => {
       </QuestionnaireSubtitle>
 
       <div
-        className="space-y-8"
+        className='space-y-8'
         style={{
           flex: 1,
-          width: '100%',
-          display: 'flex',
-          flexDirection: 'column',
-          justifyContent: 'center',
-          alignItems: 'center',
+          width: "100%",
+          display: "flex",
+          flexDirection: "column",
+          justifyContent: "center",
+          alignItems: "center"
         }}
       >
-        <CodeInput size={4} onConfirm={(value) => console.log(value)} />
+        <CodeInput size={4} onConfirm={value => setPasscode(value)} />
 
         <QuestionnaireSubtitle>输入四位口令进入测评</QuestionnaireSubtitle>
       </div>
@@ -56,31 +62,31 @@ const Index = () => {
       <div
         className='space-y-4'
         style={{
-          width: '100%',
-          display: 'flex',
-          flexDirection: 'column',
-          justifyContent: 'center',
-          alignItems: 'center',
+          width: "100%",
+          display: "flex",
+          flexDirection: "column",
+          justifyContent: "center",
+          alignItems: "center"
         }}
       >
-        <AuthButton>
-          <PrimaryButton
-            onClick={() => {
-              Taro.navigateTo({
-                url: '/pages/answer/index',
-              })
-            }}
-          >
-            开始测评
+        <AuthButton
+          onClick={async () => {
+            Taro.navigateTo({
+              url: `/pages/answer/index?code=${passcode}`
+            });
+          }}
+        >
+          <PrimaryButton disabled={passcode === undefined}>
+            {user.hasLogin || "登录并"}开始测评
           </PrimaryButton>
         </AuthButton>
 
         <AuthButton>
-          <EnhancedLink url={'/pages/history/index'}>查看历史记录</EnhancedLink>
+          <EnhancedLink url='/pages/history/index'>查看历史记录</EnhancedLink>
         </AuthButton>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default Index
+export default Index;
