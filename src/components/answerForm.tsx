@@ -90,7 +90,7 @@ export default function AnswerForm({ question, children, onChange, data }) {
         onChange(value.data);
       }}
     >
-      {question.type === "multi" && (
+      {(question.type === "multi" || question.type === "single") && (
         <>
           <FormItemEnhanced
             name="data"

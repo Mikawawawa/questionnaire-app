@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import LazySwiper, { useLazySwiper } from "taro-lazy-swiper";
 import { View } from "@tarojs/components";
 import {
@@ -17,13 +17,31 @@ export default props => {
 
   const [loading, setLoading] = useState(false);
   const [questionaire, setQuestionaire] = useState<any>([]);
-  const [schedule, setSchedule] = useState();
+  const [schedule, setSchedule] = useState<any>();
 
   const [begin, setBegin] = useState(false);
 
   const [active, setActive] = useState(0);
 
   const [answer, setAnswer] = useState<any>([]);
+
+  const handleSubmit = useCallback(
+    async (answerData: any) => {
+      const res =await Taro.request({
+        url: "http://localhost:3000/api/wechat/answer",
+        method: "POST",
+        data: {
+          raw: JSON.stringify(answerData),
+          scheduleId: schedule?.id
+        }
+      });
+      console.log("res", res);
+      Taro.navigateTo({
+        url: `/pages/result/index?id=${res.data.answer.id}`
+      });
+    },
+    [schedule]
+  );
 
   useEffect(() => {
     if (code !== undefined) {
@@ -86,7 +104,9 @@ export default props => {
                   <div className="at-article">
                     <div className="at-article__h1">{schedule.name}</div>
 
-                    <div className="at-article__info">
+                    <div className="at-article__info" style={{
+                      whiteSpace: "pre-line"
+                    }}>
                       {schedule.description}
                     </div>
 
@@ -131,7 +151,7 @@ export default props => {
                     >
                       <ActionButton
                         onClick={() => {
-                          console.log("answer", answer);
+                          handleSubmit(answer);
                         }}
                       >
                         提交

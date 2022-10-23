@@ -36,6 +36,27 @@
                         "enabled": true,
                         "pages": []
                     }
+                },
+                {
+                    "name": "",
+                    "pathName": "pages/history/index",
+                    "query": "",
+                    "launchMode": "default",
+                    "scene": null
+                },
+                {
+                    "name": "",
+                    "pathName": "pages/result/index",
+                    "query": "id=1",
+                    "launchMode": "default",
+                    "scene": null
+                },
+                {
+                    "name": "",
+                    "pathName": "pages/answer/index",
+                    "query": "code=0925",
+                    "launchMode": "default",
+                    "scene": null
                 }
             ]
         }
